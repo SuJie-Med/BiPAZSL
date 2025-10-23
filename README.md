@@ -50,4 +50,51 @@
 - <a href="https://cvml.ist.ac.at/AwA2/"><strong>AWA2</strong></a>
 
 ### Data split
-- Datasets can be download from <a href="https://datasets.d2.mpi-inf.mpg.de/xian/xlsa17.zip"><strong>Xian et al. (CVPR2017)</strong></a> and take them into dir ../../datasets/
+- Datasets can be download from <a href="https://datasets.d2.mpi-inf.mpg.de/xian/xlsa17.zip"><strong>Xian et al.</strong></a> In order to train the BiPAZSL, you should firstly download these datasets as well as the xlsa17. Then decompress and organize them as follows:
+```shell
+.
+├── data
+│   ├── CUB/CUB_200_2011/...
+│   ├── SUN/images/...
+│   ├── AWA2/Animals_with_Attributes2/...
+│   └── xlsa17/data/...
+└── ···
+```
+
+## 🚀 Train & Eval
+
+We provide our parameters setting of conventional ZSL (CZSL) and generalized ZSL (GZSL) tasks for CUB, SUN, and AWA2. You can run the following commands to train the BiPAZSL from scratch:
+
+Preparation of Attribute w2v before training：
+```shell
+python extract_attribute_w2v_CUB.py
+python extract_attribute_w2v_SUN.py
+python extract_attribute_w2v_AWA2.py
+```
+
+Train:
+```shell
+bash train.sh > train.log 2>&1
+```
+
+Eval:
+```shell
+bash test.sh > test.log 2>&1
+```
+
+## ⚡Results
+
+| Dataset | Acc(CZSL) | U(GZSL) | S(GZSL) | H(GZSL) |
+|---------|-----------|---------|---------|---------|
+| CUB     | 76.8      | 69.3    | 68.3    | 68.8    |
+| SUN     | 65.6      | 52.6    | 33.4    | 40.8    |
+| AWA2    | 70.1      | 61.3    | 82.3    | 70.2    |
+
+### Visualization
+
+```shell
+bash gradcam1.sh
+```
+
+<a href=""><img src="figures/fig5(b).png" alt="Gradcam" width="100%"></a>
+
