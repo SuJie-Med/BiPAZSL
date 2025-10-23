@@ -15,7 +15,7 @@
 ## 📌 Overview
 
 <p align="center">
-  <a href=""><img src="figures/fig2.png" alt="Framework Overview" width="100%">
+  <a href=""><img src="./figures/fig2.png" alt="Framework Overview" width="100%">
   </a>
   <p align="center"><strong></strong>BiPAZSL is a Zero-Shot Learning (ZSL) model designed to mitigate domain shift—a key challenge caused by the distribution gap between seen and unseen classes in visual-semantic space. It enhances cross-modal alignment and generalization (especially for complex scenes) via three core components: a hierarchical bidirectional progressive attention mechanism, a Feature Selection Module (FSM)-enhanced ViT, and a multi-loss fusion strategy.
   </p>
