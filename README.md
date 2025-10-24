@@ -1,12 +1,12 @@
 <p align="center">
   <h2 align="center">BiPAZSL: A Bidirectional Progressive Attention Method for Zero-Shot Learning Domain Shift Mitigation</h2>
   <p align="center">
-    <a href=""><strong>Chong Li</strong></a>·
-    <a href=""><strong>Jie Su</strong></a>·
+    <a href="https://scholar.google.com/citations?user=-Kszis0AAAAJ&hl=zh-CN"><strong>Chong Li</strong></a>·
+    <a href="https://scholar.google.com/citations?hl=zh-CN&user=qzC5ZiAAAAAJ"><strong>Jie Su</strong></a>·
     <a href=""><strong>Jinsong Gao</strong></a>
   </p>
   <h3 align="center">
-  <a href="">Paper</a> | <a href="">Project Page</a></h3>
+  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5313355">Paper</a> | <a href="">Project Page</a></h3>
 </p>
 
 ## 📣 News
@@ -15,7 +15,7 @@
 ## 📌 Overview
 
 <p align="center">
-  <a href=""><img src="figures/fig2.png" alt="Framework Overview" width="100%">
+  <a href=""><img src="figures/fig2.png" alt="Framework Overview" width="90%">
   </a>
   <p align="center"><strong></strong>BiPAZSL is a Zero-Shot Learning (ZSL) model designed to mitigate domain shift—a key challenge caused by the distribution gap between seen and unseen classes in visual-semantic space. It enhances cross-modal alignment and generalization (especially for complex scenes) via three core components: a hierarchical bidirectional progressive attention mechanism, a Feature Selection Module (FSM)-enhanced ViT, and a multi-loss fusion strategy.
   </p>
@@ -86,9 +86,9 @@ bash test.sh > test.log 2>&1
 
 | Dataset | Acc(CZSL) | U(GZSL) | S(GZSL) | H(GZSL) |
 |---------|-----------|---------|---------|---------|
-| CUB     | 76.8      | 69.3    | 68.3    | 68.8    |
-| SUN     | 65.6      | 52.6    | 33.4    | 40.8    |
-| AWA2    | 70.1      | 61.3    | 82.3    | 70.2    |
+| CUB     | 76.2      | 70.1    | 77.4    | 73.5    |
+| SUN     | 71.2      | 61.4    | 48.6    | 54.2    |
+| AWA2    | 73.8      | 68.4    | 87.7    | 76.8    |
 
 ### Visualization
 
@@ -96,5 +96,8 @@ bash test.sh > test.log 2>&1
 bash gradcam1.sh
 ```
 
-<a href=""><img src="figures/fig5(b).png" alt="Gradcam" width="100%"></a>
+<a href=""><img src="figures/fig5(b).png" alt="Gradcam" width="60%"></a>
 
+t-SNE:
+
+<a href=""><img src="figures/fig6.png" alt="Gradcam" width="60%"></a>
