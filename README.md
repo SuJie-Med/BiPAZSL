@@ -39,6 +39,7 @@
   conda activate BiPAZSL
   
   # Install dependencies
+  pip install --upgrade pip
   pip install apex
   pip install -r requirements.txt
 ```
@@ -74,7 +75,12 @@ python extract_attribute_w2v_AWA2.py
 
 Train:
 ```shell
-bash train.sh > train.log 2>&1
+# Bird-200
+bash train_cub.sh > train_cub.log 2>&1
+# SUN
+bash train_sun.sh > train_sun.log 2>&1
+# AWA2
+bash train-awa2.sh > train_awa2.log 2>&1
 ```
 
 Eval:
@@ -93,11 +99,21 @@ bash test.sh > test.log 2>&1
 ### Visualization
 
 ```shell
-bash gradcam1.sh
+# Visualize relevant images through gradcam
+bash gradcam.sh
 ```
 
-<a href=""><img src="figures/fig5(b).png" alt="Gradcam" width="60%"></a>
+## ❗ Cite:
 
-t-SNE:
+If this work is helpful for you, please cite our paper.
+```shell
+@article{li5313355bipazsl,
+  title={Bipazsl: A Bidirectional Progressive Attention Method for Zero-Shot Learning Domain Shift Mitigation},
+  author={Li, Chong and Su, Jie and Gao, Jinsong},
+  journal={Available at SSRN 5313355}
+}
+```
 
-<a href=""><img src="figures/fig6.png" alt="Gradcam" width="60%"></a>
+
+## 📕 Ackowledgement
+We would like to acknowledge the following repositories for providing valuable components that contributed to our work. <a href="https://github.com/osierboy/GEM-ZSL"><strong>GEM-ZSL</strong></a>
