@@ -9,7 +9,7 @@
   <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5313355">Paper</a> | <a href="">Project Page</a></h3>
 </p>
 
-## 📣 Abstractfigure.png
+## 📣 Abstractfigure
 <img src="figures/abstract_figure.png" alt="Framework Overview" width="90%">
 
 ## 📌 Overview
