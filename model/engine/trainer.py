@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 import torch.distributed as dist
-from models.utils.comm import *
+from model.utils.comm import *
 from .inferencer import eval_zs_gzsl
 from apex import amp
 
