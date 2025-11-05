@@ -6,8 +6,8 @@ from einops import rearrange
 import math
 import os
 from torch.nn.functional import dropout
-from models.modeling import utils
-from models.modeling.backbone_vit.vit_model import vit_base_patch16_224 as create_model
+from model.modeling import utils
+from model.modeling.backbone_vit.vit_model import vit_base_patch16_224 as create_model
 from models.modeling.backbone_vit.vit_model import vit_large_patch16_224 as create_model1
 from os.path import join
 import pickle
@@ -16,15 +16,6 @@ from torch.autograd import Variable
 import torch.nn.init as init
 Norm = nn.LayerNorm
 
-
-def trunc_normal_(tensor, mean=0, std=.01):
-    size = tensor.shape
-    tmp = tensor.new_empty(size + (4,)).normal_()
-    valid = (tmp < 2) & (tmp > -2)
-    ind = valid.max(-1, keepdim=True)[1]
-    tensor.data.copy_(tmp.gather(-1, ind).squeeze(-1))
-    tensor.data.mul_(std).add_(mean)
-    return tensor
 
 class Part_Attention(nn.Module):
     def __init__(self, num_heads, original_seq_len):
@@ -327,7 +318,14 @@ def semantic_contrastive_loss(features, labels, attr_embed, temperature=0.07):
     return loss
 
 
-
+def trunc_normal_(tensor, mean=0, std=.01):
+    size = tensor.shape
+    tmp = tensor.new_empty(size + (4,)).normal_()
+    valid = (tmp < 2) & (tmp > -2)
+    ind = valid.max(-1, keepdim=True)[1]
+    tensor.data.copy_(tmp.gather(-1, ind).squeeze(-1))
+    tensor.data.mul_(std).add_(mean)
+    return tensor
 
 
 class PSVMANet(nn.Module):
@@ -457,7 +455,7 @@ class PSVMANet(nn.Module):
         weighted_feats = self.part_attention(feats_0, self.attn_weights)
 
         # 4. 传入最后一层继续处理
-        patches_1 = feats_0[:, 1:, :]  # 使用关键patch增强后的特征
+        patches_1 = weighted_feats[:, 1:, :]  # 使用关键patch增强后的特征
         feats_in = patches_1
         # feats_1_out = self.backbone_1(patches_1 + self.pos_embed)  # 最后一层
         # feats_1 = feats_1_out[0]
@@ -550,4 +548,5 @@ def build_PSVMANet(cfg):
                   attritube_num=attritube_num,
                   group_num=group_num, w2v=w2v,
                   cls_num=cls_num, ucls_num=ucls_num,
+
                   device=device)
