@@ -7,17 +7,12 @@ def data_transform(name, size=224):
 
     if 'resize_random_crop' in name:
         transform.extend([
-            transforms.Resize(int(size * 8. / 7.)),
-            transforms.RandomCrop(size),
-            transforms.RandomHorizontalFlip(0.5)
+            transforms.RandomResizedCrop(size, scale=(0.75, 1.0), ratio=(0.9, 1.1)),
+            transforms.RandomHorizontalFlip(0.5),
+            transforms.ColorJitter(brightness=0.2, contrast=0.15, saturation=0.15, hue=0.05),
+            transforms.RandomRotation(10),
+            transforms.RandomPerspective(distortion_scale=0.1, p=0.3),
         ])
-        # transform.extend([
-        #     transforms.RandomResizedCrop(size, scale=(0.75, 1.0), ratio=(0.9, 1.1)),
-        #     transforms.RandomHorizontalFlip(0.5),
-        #     transforms.ColorJitter(brightness=0.2, contrast=0.15, saturation=0.15, hue=0.05),
-        #     transforms.RandomRotation(10),
-        #     transforms.RandomPerspective(distortion_scale=0.1, p=0.3),
-        # ])
     elif 'resize_center_crop' in name:
         transform.extend(
             transforms.Resize(size),
