@@ -1,12 +1,12 @@
 <p align="center">
   <h2 align="center">BiPAZSL: A Bidirectional Progressive Attention Method for Zero-Shot Learning Domain Shift Mitigation</h2>
-  <p align="center">
+  <!-- <p align="center">
     <a href="https://scholar.google.com/citations?user=-Kszis0AAAAJ&hl=zh-CN"><strong>Chong Li</strong></a>·
     <a href="https://scholar.google.com/citations?hl=zh-CN&user=qzC5ZiAAAAAJ"><strong>Jie Su</strong></a>·
     <a href=""><strong>Jinsong Gao</strong></a>
-  </p>
-  <h3 align="center">
-  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5313355">Paper</a> | <a href="">Project Page</a></h3>
+  </p> -->
+  <!-- <h3 align="center">
+  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5313355">Paper</a> | <a href="">Project Page</a></h3> -->
 </p>
 
 ## 📣 Abstractfigure
