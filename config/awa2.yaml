@@ -1,5 +1,5 @@
 OUTPUT_DIR: "checkpoints"
-LOG_FILE_NAME: "gzsl_cub-awa2_test.log"
+LOG_FILE_NAME: "gzsl-awa2_test.log"
 MODEL_FILE_NAME: "gzsl_awa2_train_1.pth"
 MODEL:
   META_ARCHITECTURE: "Model"
