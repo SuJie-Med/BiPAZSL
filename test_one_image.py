@@ -4,90 +4,140 @@ from torchvision import transforms
 
 def process_image(image_path, size=224):
     """
-    预处理单张图片
+    Preprocess a single image for model input.
+    
     Args:
-        image_path (str): 图片文件的路径
-        size (int): 图片尺寸
+        image_path (str): Path to the image file
+        size (int): Target size for image resizing (default: 224)
+    
     Returns:
-        torch.Tensor: 处理后的图片张量
+        torch.Tensor: Preprocessed image tensor with batch dimension
     """
+    # Load image and convert to RGB
     img = Image.open(image_path).convert("RGB")
 
-    # 你可以根据训练时的预处理方式来选择
+    # Define preprocessing pipeline (matches training configuration)
     preprocess = transforms.Compose([
-        transforms.Resize((size, size)),        # 调整图片大小
-        transforms.ToTensor(),                  # 转换为tensor
-        transforms.Normalize(                   # 归一化（根据训练时使用的均值和标准差）
+        transforms.Resize((size, size)),        # Resize image to target dimensions
+        transforms.ToTensor(),                  # Convert to tensor (HWC -> CHW)
+        transforms.Normalize(                   # Normalize with ImageNet stats
             mean=[0.485, 0.456, 0.406], 
             std=[0.229, 0.224, 0.225]
         ),
     ])
     
-    img_tensor = preprocess(img).unsqueeze(0)  # 添加 batch 维度
+    # Add batch dimension (1, C, H, W)
+    img_tensor = preprocess(img).unsqueeze(0)
     return img_tensor
+
 
 def predict_image(model, image_tensor, att_seen, att_unseen, att_all, test_id, device):
     """
-    对单张图片进行推理并输出结果
-    Args:
-        model (torch.nn.Module): 训练好的模型
-        image_tensor (torch.Tensor): 处理后的图片张量
-        att_seen (torch.Tensor): 见过类别的属性
-        att_unseen (torch.Tensor): 未见过类别的属性
-        att_all (torch.Tensor): 所有类别的属性
-        test_id (np.array): 测试集类别ID
-        device (torch.device): 计算设备
-    Returns:
-        int: 预测类别
-        str: 预测类别名称
-    """
-    model.eval()  # 设置模型为评估模式
-    image_tensor = image_tensor.to(device)  # 将图片数据移至GPU（如果使用GPU）
+    Perform inference on a single image and return prediction results.
     
-    # 推理
+    Args:
+        model (torch.nn.Module): Trained model
+        image_tensor (torch.Tensor): Preprocessed image tensor
+        att_seen (torch.Tensor): Attributes of seen classes
+        att_unseen (torch.Tensor): Attributes of unseen classes
+        att_all (torch.Tensor): Attributes of all classes
+        test_id (np.array): Array of test class IDs/names
+        device (torch.device): Computing device (CPU/GPU)
+    
+    Returns:
+        int: Predicted class index
+        str: Predicted class name
+    """
+    model.eval()  # Set model to evaluation mode
+    image_tensor = image_tensor.to(device)  # Move tensor to target device
+    
+    # Inference with no gradient computation
     with torch.no_grad():
-        scores = model(image_tensor, seen_att=att_seen, att_all=att_all)  # 预测分数
-        _, pred = scores.max(dim=1)  # 获取最大分数的索引作为预测结果
-        pred = pred.item()  # 获取预测的类别标签
+        scores = model(image_tensor, seen_att=att_seen, att_all=att_all)  # Get class scores
+        _, pred = scores.max(dim=1)  # Get index of highest score
+        pred = pred.item()  # Convert tensor to scalar
 
-    # 获取类别名称
-    pred_cls_name = test_id[pred]  # 使用对应的ID映射到类别名称
+    # Map predicted index to class name
+    pred_cls_name = test_id[pred]
     return pred, pred_cls_name
 
+
 def test_single_image(image_path, model, att_seen, att_unseen, att_all, test_id, device):
-    # 处理单张图片
-    image_tensor = process_image(image_path, size=224)  # 你可以根据需要调整图片大小
+    """
+    End-to-end testing pipeline for a single image.
     
-    # 获取预测结果
-    pred, pred_cls_name = predict_image(model, image_tensor, att_seen, att_unseen, att_all, test_id, device)
+    Args:
+        image_path (str): Path to the image file
+        model (torch.nn.Module): Trained model
+        att_seen (torch.Tensor): Attributes of seen classes
+        att_unseen (torch.Tensor): Attributes of unseen classes
+        att_all (torch.Tensor): Attributes of all classes
+        test_id (np.array): Array of test class IDs/names
+        device (torch.device): Computing device (CPU/GPU)
+    """
+    # Preprocess the image
+    image_tensor = process_image(image_path, size=224)
     
-    # 输出结果
+    # Get prediction results
+    pred, pred_cls_name = predict_image(
+        model, 
+        image_tensor, 
+        att_seen, 
+        att_unseen, 
+        att_all, 
+        test_id, 
+        device
+    )
+    
+    # Print results
     print(f"Predicted Class ID: {pred}")
     print(f"Predicted Class Name: {pred_cls_name}")
 
 
 def main():
-    # 假设你已经加载了模型、数据等
-    model = build_gzsl_pipeline(cfg)
+    # --------------------------
+    # Configuration and Setup
+    # --------------------------
+    # Note: You need to properly initialize cfg and res before running
+    # These should be loaded using your actual configuration and dataset setup
+    
+    # Load model architecture
+    model = build_gzsl_pipeline(cfg)  # Replace with actual model builder
+    
+    # Load trained weights
+    checkpoint_path = 'checkpoints/gzsl_cub_train_1ceng.pth'
+    saved_dict = torch.load(checkpoint_path)['model']
     model_dict = model.state_dict()
-    saved_dict = torch.load('checkpoints/gzsl_cub_train_1ceng.pth')
-    saved_dict = {k: v for k, v in saved_dict['model'].items() if k in model_dict}
+    
+    # Filter and load compatible weights
+    saved_dict = {k: v for k, v in saved_dict.items() if k in model_dict}
     model_dict.update(saved_dict)
     model.load_state_dict(model_dict)
     
-    device = torch.device(cfg.MODEL.DEVICE)
+    # Move model to device
+    device = torch.device(cfg.MODEL.DEVICE)  # e.g., 'cuda' or 'cpu'
     model = model.to(device)
     
-    # 加载其他必要的数据（例如属性信息等）
-    att_unseen = res['att_unseen'].to(device)
+    # Load attribute data (from dataset metadata)
+    att_unseen = res['att_unseen'].to(device)  # Replace 'res' with actual dataset info
     att_seen = res['att_seen'].to(device)
     att_all = torch.cat((att_seen, att_unseen), dim=0).to(device)
-    test_id = res['test_id']
+    test_id = res['test_id']  # Class ID/name mapping
+    
+    # --------------------------
+    # Run Single Image Test
+    # --------------------------
+    image_path = 'path_to_your_image.jpg'  # Replace with actual image path
+    test_single_image(
+        image_path, 
+        model, 
+        att_seen, 
+        att_unseen, 
+        att_all, 
+        test_id, 
+        device
+    )
 
-    image_path = 'path_to_your_image.jpg'  # 替换为实际图片路径
-
-    # 测试单张图片
-    test_single_image(image_path, model, att_seen, att_unseen, att_all, test_id, device)
 
 if __name__ == '__main__':
     main()
