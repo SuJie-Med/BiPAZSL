@@ -1,1 +1,1 @@
-from .PSVMAModel import build_gzsl_pipeline
+from .BIPAZSL import build_gzsl_pipeline
