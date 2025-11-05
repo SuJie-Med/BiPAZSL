@@ -1,6 +1,6 @@
 OUTPUT_DIR: "checkpoints"
-LOG_FILE_NAME: "aaa_sun9.log"
-MODEL_FILE_NAME: "aaa_sun9.pth"
+LOG_FILE_NAME: "sun_train.log"
+MODEL_FILE_NAME: "sun_train.pth"
 MODEL:
   META_ARCHITECTURE: "Model"
   SCALE: 25.0
@@ -14,12 +14,8 @@ MODEL:
   LOSS:
     LAMBDA1: 1.0
     LAMBDA2: 0.5
-    # LAMBDA2: 0.005
-    # LAMBDA2: 0.2
     LAMBDA3: 0.02
-    # LAMBDA3: 0.05
-    # LAMBDA3: 0.1
-    LAMBDA4: 0.0
+    LAMBDA4: 0.2
 
 DATASETS:
   NAME: "SUN"
