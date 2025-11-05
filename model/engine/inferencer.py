@@ -1,38 +1,6 @@
 import torch
 import numpy as np
 from sklearn.metrics import accuracy_score
-def cal_accuracy(model, dataloadr, att, test_id, device,att_all, bias=None):
-
-    scores = []
-    labels = []
-    cpu = torch.device('cpu')
-
-    for iteration, (img, label) in enumerate(dataloadr):
-        img = img.to(device)
-        # print('psvam_img.shape', img.shape)
-        score = model(img, seen_att=att,att_all=att_all)
-        scores.append(score)
-        labels.append(label)
-
-    scores = torch.cat(scores, dim=0)
-    labels = torch.cat(labels, dim=0)
-
-    if bias is not None:
-        scores = scores-bias
-
-    _,pred = scores.max(dim=1)
-    pred = pred.view(-1).to(cpu)
-
-    outpred_0 = test_id[pred]
-    outpred = np.array(outpred_0, dtype='int')
-    labels = labels.numpy()
-    unique_labels = np.unique(labels)
-    acc = 0
-    for l in unique_labels:
-        idx = np.nonzero(labels == l)[0]
-        acc += accuracy_score(labels[idx], outpred[idx])
-    acc = acc / unique_labels.shape[0]
-    return acc
 
 def eval(
         tu_loader,
@@ -100,3 +68,36 @@ def eval_zs_gzsl(
     model.train()
 
     return acc_gzsl_seen, acc_gzsl_unseen, H, acc_zsl
+
+def cal_accuracy(model, dataloadr, att, test_id, device,att_all, bias=None):
+
+    scores = []
+    labels = []
+    cpu = torch.device('cpu')
+
+    for iteration, (img, label) in enumerate(dataloadr):
+        img = img.to(device)
+        # print('bipa_img.shape', img.shape)
+        score = model(img, seen_att=att,att_all=att_all)
+        scores.append(score)
+        labels.append(label)
+
+    scores = torch.cat(scores, dim=0)
+    labels = torch.cat(labels, dim=0)
+
+    if bias is not None:
+        scores = scores-bias
+
+    _,pred = scores.max(dim=1)
+    pred = pred.view(-1).to(cpu)
+
+    outpred_0 = test_id[pred]
+    outpred = np.array(outpred_0, dtype='int')
+    labels = labels.numpy()
+    unique_labels = np.unique(labels)
+    acc = 0
+    for l in unique_labels:
+        idx = np.nonzero(labels == l)[0]
+        acc += accuracy_score(labels[idx], outpred[idx])
+    acc = acc / unique_labels.shape[0]
+    return acc
