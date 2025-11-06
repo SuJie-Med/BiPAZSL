@@ -103,16 +103,6 @@ bash test.sh > test.log 2>&1
 bash gradcam.sh
 ```
 
-## ❗ Cite:
-
-If this work is helpful for you, please cite our paper.
-```shell
-@article{li5313355bipazsl,
-  title={Bipazsl: A Bidirectional Progressive Attention Method for Zero-Shot Learning Domain Shift Mitigation},
-  author={Li, Chong and Su, Jie and Gao, Jinsong},
-  journal={Available at SSRN 5313355}
-}
-```
 
 
 ## 📕 Ackowledgement
