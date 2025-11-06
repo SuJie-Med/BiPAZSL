@@ -88,7 +88,7 @@ Eval:
 bash test.sh > test.log 2>&1
 ```
 
-You can use the test script test.sh to test based on the provided <a href="https://drive.google.com/file/d/1BsqQNbEaaZJSTzII-ocFl2vkY-azYwQ6/view?usp=drive_link"><strong>SUN</strong></a> model.
+You can use the test script test.sh to test based on the provided <a href="https://drive.google.com/file/d/1BsqQNbEaaZJSTzII-ocFl2vkY-azYwQ6/view?usp=drive_link"><strong>SUN_GZSL</strong></a> model.
 
 ### Visualization
 
