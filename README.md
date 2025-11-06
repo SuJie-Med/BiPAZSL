@@ -100,4 +100,4 @@ bash gradcam.sh
 
 
 ## 📕 Ackowledgement
-We would like to acknowledge the following repositories for providing valuable components that contributed to our work. <a href="https://github.com/osierboy/GEM-ZSL"><strong>GEM-ZSL</strong></a>
+We would like to acknowledge the following repositories for providing valuable components that contributed to our work. <a href="https://github.com/osierboy/GEM-ZSL"><strong>GEM-ZSL</strong></a> <a href="https://github.com/ManLiuCoder/PSVMA"><strong>PSVMA</strong></a>
