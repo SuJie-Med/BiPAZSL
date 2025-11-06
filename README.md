@@ -88,13 +88,7 @@ Eval:
 bash test.sh > test.log 2>&1
 ```
 
-## ⚡Results
-
-| Dataset | Acc(CZSL) | U(GZSL) | S(GZSL) | H(GZSL) |
-|---------|-----------|---------|---------|---------|
-| CUB     | 76.2      | 70.1    | 77.4    | 73.5    |
-| SUN     | 71.2      | 61.4    | 48.6    | 54.2    |
-| AWA2    | 73.8      | 68.4    | 87.7    | 76.8    |
+You can use the test script test.sh to test based on the provided <a href="https://drive.google.com/file/d/1BsqQNbEaaZJSTzII-ocFl2vkY-azYwQ6/view?usp=drive_link"><strong>SUN</strong></a> model.
 
 ### Visualization
 
