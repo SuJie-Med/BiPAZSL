@@ -1,7 +1,7 @@
-from .BiPAZSL import build_BiPAZSL
+from .BiPAZSL import build_BiPAZSL_1
 
 _GZSL_META_ARCHITECTURES = {
-    "Model": build_BiPAZSL,
+    "Model": build_BiPAZSL_1,
 }
 
 def build_gzsl_pipeline(cfg):
